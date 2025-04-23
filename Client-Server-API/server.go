@@ -92,12 +92,16 @@ func salvarCotacaoNoBanco(bid string) error {
 		return err
 	}
 
-	// Insere a cotação
-	stmt, err := db.Prepare("INSERT INTO cotacoes(bid) VALUES(?)")
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Millisecond)
+	defer cancel()
+
+	// Insere a cotação com timeout
+	stmt, err := db.PrepareContext(ctx, "INSERT INTO cotacoes(bid) VALUES(?)")
 	if err != nil {
 		return err
 	}
 	defer stmt.Close()
+
 
 	_, err = stmt.Exec(bid)
 	return err
