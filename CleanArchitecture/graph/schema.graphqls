@@ -1,0 +1,21 @@
+type Order {
+  id: ID!
+  price: Float!
+  tax: Float!
+  finalPrice: Float!
+  createdAt: String!
+  updatedAt: String!
+}
+
+input CreateOrderInput {
+  price: Float!
+  tax: Float!
+}
+
+type Query {
+  orders: [Order!]!
+}
+
+type Mutation {
+  createOrder(input: CreateOrderInput!): Order!
+} 

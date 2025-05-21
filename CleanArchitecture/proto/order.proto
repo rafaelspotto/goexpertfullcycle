@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package order;
+
+option go_package = "github.com/goexpertfullcycle/cleanarchitecture/proto";
+
+service OrderService {
+  rpc CreateOrder(CreateOrderRequest) returns (Order) {}
+  rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {}
+}
+
+message CreateOrderRequest {
+  double price = 1;
+  double tax = 2;
+}
+
+message Order {
+  string id = 1;
+  double price = 2;
+  double tax = 3;
+  double final_price = 4;
+  string created_at = 5;
+  string updated_at = 6;
+}
+
+message ListOrdersRequest {}
+
+message ListOrdersResponse {
+  repeated Order orders = 1;
+} 

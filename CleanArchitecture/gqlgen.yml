@@ -1,0 +1,33 @@
+schema:
+  - graph/*.graphqls
+
+exec:
+  filename: graph/generated.go
+  package: graph
+
+model:
+  filename: graph/model/models_gen.go
+  package: model
+
+resolver:
+  layout: follow-schema
+  dir: internal/interfaces/graphql
+  package: graphql
+  filename_template: "{name}.resolvers.go"
+
+autobind:
+  - "github.com/goexpertfullcycle/cleanarchitecture/internal/interfaces/graphql.Order"
+  - "github.com/goexpertfullcycle/cleanarchitecture/internal/interfaces/graphql.CreateOrderInput"
+
+models:
+  ID:
+    model:
+      - github.com/99designs/gqlgen/graphql.ID
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32
+  Int:
+    model:
+      - github.com/99designs/gqlgen/graphql.Int
+      - github.com/99designs/gqlgen/graphql.Int64
+      - github.com/99designs/gqlgen/graphql.Int32 
