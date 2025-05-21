@@ -16,8 +16,8 @@ resolver:
   filename_template: "{name}.resolvers.go"
 
 autobind:
-  - "github.com/goexpertfullcycle/cleanarchitecture/internal/interfaces/graphql.Order"
-  - "github.com/goexpertfullcycle/cleanarchitecture/internal/interfaces/graphql.CreateOrderInput"
+  - "github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/interfaces/graphql.Order"
+  - "github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/interfaces/graphql.CreateOrderInput"
 
 models:
   ID:

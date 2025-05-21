@@ -6,8 +6,8 @@ import (
 	"net"
 	"time"
 
-	"github.com/goexpertfullcycle/cleanarchitecture/internal/core/usecase"
-	"github.com/goexpertfullcycle/cleanarchitecture/proto"
+	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/core/usecase"
+	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/proto"
 	"google.golang.org/grpc"
 )
 

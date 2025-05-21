@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package order;
 
-option go_package = "github.com/goexpertfullcycle/cleanarchitecture/proto";
+option go_package = "github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/proto";
 
 service OrderService {
   rpc CreateOrder(CreateOrderRequest) returns (Order) {}

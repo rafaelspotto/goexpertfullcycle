@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/goexpertfullcycle/cleanarchitecture/internal/core/usecase"
+	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/core/usecase"
 )
 
 type OrderHandler struct {

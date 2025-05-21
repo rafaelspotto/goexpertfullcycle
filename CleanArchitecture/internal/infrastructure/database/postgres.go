@@ -3,7 +3,7 @@ package database
 import (
 	"fmt"
 
-	"github.com/goexpertfullcycle/cleanarchitecture/internal/core/domain"
+	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/core/domain"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

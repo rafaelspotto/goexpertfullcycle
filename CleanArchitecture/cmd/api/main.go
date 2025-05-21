@@ -6,12 +6,12 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/goexpertfullcycle/cleanarchitecture/graph"
-	"github.com/goexpertfullcycle/cleanarchitecture/internal/core/usecase"
-	"github.com/goexpertfullcycle/cleanarchitecture/internal/infrastructure/database"
-	"github.com/goexpertfullcycle/cleanarchitecture/internal/interfaces/graphql"
-	"github.com/goexpertfullcycle/cleanarchitecture/internal/interfaces/grpc"
-	httpHandler "github.com/goexpertfullcycle/cleanarchitecture/internal/interfaces/http"
+	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/graph"
+	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/core/usecase"
+	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/infrastructure/database"
+	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/interfaces/graphql"
+	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/interfaces/grpc"
+	httpHandler "github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/interfaces/http"
 )
 
 func main() {
