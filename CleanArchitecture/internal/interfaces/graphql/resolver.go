@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/core/usecase"
+	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/graph"
 )
 
 type Resolver struct {
@@ -26,13 +27,13 @@ func (r *Resolver) Query() *queryResolver {
 
 type mutationResolver struct{ *Resolver }
 
-func (r *mutationResolver) CreateOrder(ctx context.Context, input CreateOrderInput) (*Order, error) {
+func (r *mutationResolver) CreateOrder(ctx context.Context, input graph.CreateOrderInput) (*graph.Order, error) {
 	order, err := r.OrderUseCase.Create(input.Price, input.Tax)
 	if err != nil {
 		return nil, err
 	}
 
-	return &Order{
+	return &graph.Order{
 		ID:         order.ID,
 		Price:      order.Price,
 		Tax:        order.Tax,
@@ -44,15 +45,15 @@ func (r *mutationResolver) CreateOrder(ctx context.Context, input CreateOrderInp
 
 type queryResolver struct{ *Resolver }
 
-func (r *queryResolver) Orders(ctx context.Context) ([]*Order, error) {
+func (r *queryResolver) Orders(ctx context.Context) ([]*graph.Order, error) {
 	orders, err := r.OrderUseCase.List()
 	if err != nil {
 		return nil, err
 	}
 
-	var result []*Order
+	var result []*graph.Order
 	for _, order := range orders {
-		result = append(result, &Order{
+		result = append(result, &graph.Order{
 			ID:         order.ID,
 			Price:      order.Price,
 			Tax:        order.Tax,

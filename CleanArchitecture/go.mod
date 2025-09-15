@@ -7,7 +7,6 @@ toolchain go1.23.3
 require (
 	github.com/99designs/gqlgen v0.17.73
 	github.com/google/uuid v1.6.0
-	github.com/vektah/gqlparser/v2 v2.5.26
 	google.golang.org/grpc v1.59.0
 	google.golang.org/protobuf v1.36.6
 	gorm.io/driver/postgres v1.5.4
@@ -27,6 +26,7 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/sosodev/duration v1.3.1 // indirect
+	github.com/vektah/gqlparser/v2 v2.5.26 // indirect
 	golang.org/x/crypto v0.37.0 // indirect
 	golang.org/x/net v0.39.0 // indirect
 	golang.org/x/sys v0.32.0 // indirect
