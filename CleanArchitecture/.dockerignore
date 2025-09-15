@@ -1,0 +1,35 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yaml
+
+# Scripts
+scripts/
+
+# API testing
+api.http
+
+# Makefile
+Makefile
+
+# GraphQL config
+gqlgen.yml
+
+# Proto files
+proto/
+
+# Go build cache
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
