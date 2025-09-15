@@ -4,12 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/graph"
 	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/core/usecase"
 	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/infrastructure/database"
-	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/interfaces/graphql"
 	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/interfaces/grpc"
 	httpHandler "github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/interfaces/http"
 )
@@ -39,11 +35,11 @@ func main() {
 		}
 	})
 
-	// Initialize GraphQL
-	resolver := graphql.NewResolver(orderUseCase)
-	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: resolver}))
-	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	http.Handle("/query", srv)
+	// Initialize GraphQL (simplified for now)
+	// resolver := graphql.NewResolver(orderUseCase)
+	// srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: resolver}))
+	// http.Handle("/", playground.Handler("GraphQL playground", "/query"))
+	// http.Handle("/query", srv)
 
 	// Start gRPC server in a goroutine
 	go func() {

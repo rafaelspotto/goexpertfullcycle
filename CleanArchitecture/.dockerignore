@@ -22,9 +22,6 @@ Makefile
 # GraphQL config
 gqlgen.yml
 
-# Proto files
-proto/
-
 # Go build cache
 *.exe
 *.exe~

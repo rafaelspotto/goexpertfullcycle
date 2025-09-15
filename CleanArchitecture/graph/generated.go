@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/99designs/gqlgen/graphql"
-	"github.com/rafaelspotto/goexpertfullcycle/cleanarchitecture/internal/interfaces/graphql"
 )
 
 // NewExecutableSchema creates an ExecutableSchema from the ResolverRoot interface.
@@ -31,22 +30,20 @@ type DirectiveRoot struct {
 }
 
 type ComplexityRoot struct {
-	Mutation struct {
-		CreateOrder func(childComplexity int, input graphql.CreateOrderInput) int
-	}
+}
 
-	Order struct {
-		CreatedAt  func(childComplexity int) int
-		FinalPrice func(childComplexity int) int
-		ID         func(childComplexity int) int
-		Price      func(childComplexity int) int
-		Tax        func(childComplexity int) int
-		UpdatedAt  func(childComplexity int) int
-	}
+type CreateOrderInput struct {
+	Price float64 `json:"price"`
+	Tax   float64 `json:"tax"`
+}
 
-	Query struct {
-		Orders func(childComplexity int) int
-	}
+type Order struct {
+	ID         string  `json:"id"`
+	Price      float64 `json:"price"`
+	Tax        float64 `json:"tax"`
+	FinalPrice float64 `json:"finalPrice"`
+	CreatedAt  string  `json:"createdAt"`
+	UpdatedAt  string  `json:"updatedAt"`
 }
 
 type mutationResolver struct{ *ResolverRoot }
@@ -74,6 +71,19 @@ func (e *executableSchema) Mutation(ctx context.Context, op *graphql.OperationDe
 
 func (e *executableSchema) Subscription(ctx context.Context, op *graphql.OperationDefinition) func() *graphql.Response {
 	return func() *graphql.Response {
+		return &graphql.Response{
+			Data:   []byte(`{"data":{}}`),
+			Errors: nil,
+		}
+	}
+}
+
+func (e *executableSchema) Complexity(ctx context.Context, typeName, field string, childComplexity int, args map[string]any) (int, bool) {
+	return 0, false
+}
+
+func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
+	return func(ctx context.Context) *graphql.Response {
 		return &graphql.Response{
 			Data:   []byte(`{"data":{}}`),
 			Errors: nil,
