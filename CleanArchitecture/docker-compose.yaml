@@ -23,6 +23,7 @@ services:
     container_name: cleanarchitecture-app
     ports:
       - "8080:8080"
+      - "50051:50051"
     depends_on:
       postgres:
         condition: service_healthy
