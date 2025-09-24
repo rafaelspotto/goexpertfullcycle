@@ -58,3 +58,49 @@ func (r *Resolver) Query() graph.QueryResolver { return &queryResolver{r} }
 
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+/*
+	func (r *mutationResolver) CreateOrder(ctx context.Context, input model.CreateOrderInput) (*model.Order, error) {
+	order, err := r.OrderUseCase.Create(input.Price, input.Tax)
+	if err != nil {
+		return nil, err
+	}
+
+	return &graph.Order{
+		ID:         order.ID,
+		Price:      order.Price,
+		Tax:        order.Tax,
+		FinalPrice: order.FinalPrice,
+		CreatedAt:  order.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		UpdatedAt:  order.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
+	}, nil
+}
+func (r *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
+	orders, err := r.OrderUseCase.List()
+	if err != nil {
+		return nil, err
+	}
+
+	var result []*graph.Order
+	for _, order := range orders {
+		result = append(result, &graph.Order{
+			ID:         order.ID,
+			Price:      order.Price,
+			Tax:        order.Tax,
+			FinalPrice: order.FinalPrice,
+			CreatedAt:  order.CreatedAt.Format("2006-01-02T15:04:05Z07:00"),
+			UpdatedAt:  order.UpdatedAt.Format("2006-01-02T15:04:05Z07:00"),
+		})
+	}
+
+	return result, nil
+}
+func (r *Resolver) Mutation() graph.MutationResolver { return &mutationResolver{r} }
+func (r *Resolver) Query() graph.QueryResolver { return &queryResolver{r} }
+*/

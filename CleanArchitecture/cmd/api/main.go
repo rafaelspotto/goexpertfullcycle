@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 
@@ -35,11 +36,70 @@ func main() {
 		}
 	})
 
-	// Initialize GraphQL (simplified for now)
-	// resolver := graphql.NewResolver(orderUseCase)
-	// srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: resolver}))
-	// http.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	// http.Handle("/query", srv)
+	// Initialize GraphQL (simple implementation)
+	http.HandleFunc("/graphql", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		var request struct {
+			Query string `json:"query"`
+		}
+
+		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+			http.Error(w, "Invalid JSON", http.StatusBadRequest)
+			return
+		}
+
+		// Simple GraphQL query handling
+		if request.Query == "{ orders { id price tax finalPrice createdAt updatedAt } }" {
+			orders, err := orderUseCase.List()
+			if err != nil {
+				http.Error(w, "Internal server error", http.StatusInternalServerError)
+				return
+			}
+
+			response := map[string]interface{}{
+				"data": map[string]interface{}{
+					"orders": orders,
+				},
+			}
+
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(response)
+			return
+		}
+
+		// Handle createOrder mutation
+		if request.Query == "mutation { createOrder(input: {price: 100.0, tax: 10.0}) { id price tax finalPrice createdAt updatedAt } }" {
+			order, err := orderUseCase.Create(100.0, 10.0)
+			if err != nil {
+				http.Error(w, "Internal server error", http.StatusInternalServerError)
+				return
+			}
+
+			response := map[string]interface{}{
+				"data": map[string]interface{}{
+					"createOrder": order,
+				},
+			}
+
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(response)
+			return
+		}
+
+		// Default response
+		response := map[string]interface{}{
+			"data": map[string]interface{}{
+				"message": "GraphQL endpoint is working! Try: { orders { id price tax finalPrice createdAt updatedAt } }",
+			},
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(response)
+	})
 
 	// Start gRPC server in a goroutine
 	go func() {
