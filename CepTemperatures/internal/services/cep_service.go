@@ -48,5 +48,5 @@ func ValidateCepFormat(cep string) (bool, error) {
 //Tratamento de erros específicos
 
 func HandleError(err error) (models.ErrorResponse, error) {
-	return models.ErrorResponse{Message: err.Error()}, err
+	return models.ErrorResponse{Error: err.Error()}, err
 }
