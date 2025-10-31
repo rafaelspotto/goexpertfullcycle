@@ -27,7 +27,7 @@ func main() {
 		otlpEndpoint = "otel-collector:4318"
 	}
 
-	tp, err := telemetry.InitTracing("service-b", otlpEndpoint)
+	tp, err := telemetry.InitTracing("service-a", otlpEndpoint)
 	if err != nil {
 		log.Printf("Failed to initialize tracing: %v", err)
 	} else {
@@ -43,7 +43,7 @@ func main() {
 	r := gin.New()
 
 	// Middleware de tracing OpenTelemetry (deve ser o primeiro)
-	r.Use(otelgin.Middleware("service-b"))
+	r.Use(otelgin.Middleware("service-a"))
 
 	// Middleware de logging
 	r.Use(gin.Logger())
@@ -56,8 +56,8 @@ func main() {
 	config.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "Authorization", "X-Requested-With"}
 	r.Use(cors.New(config))
 
-	// Registrar rotas
-	r.GET("/weather/:cep", handlers.GetWeatherByCep)
+	// Registrar rotas - POST endpoint para receber CEP
+	r.POST("/", handlers.HandleCepRequest)
 
 	// Health check endpoint
 	r.GET("/health", func(c *gin.Context) {
@@ -67,7 +67,7 @@ func main() {
 	// Obter porta das variáveis de ambiente
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = "8081"
 	}
 
 	// Criar canal para capturar sinais de interrupção
@@ -76,7 +76,7 @@ func main() {
 
 	// Iniciar servidor em goroutine
 	go func() {
-		log.Printf("Server starting on port %s", port)
+		log.Printf("Service A starting on port %s", port)
 		if err := r.Run(":" + port); err != nil {
 			log.Fatal("Failed to start server:", err)
 		}
@@ -84,7 +84,7 @@ func main() {
 
 	// Aguardar sinal de interrupção
 	<-sigChan
-	log.Println("Shutting down server...")
+	log.Println("Shutting down Service A...")
 
 	// Shutdown do tracer provider
 	if tp != nil {
@@ -93,3 +93,4 @@ func main() {
 		}
 	}
 }
+

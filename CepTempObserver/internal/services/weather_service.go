@@ -58,6 +58,7 @@ func GetWeather(ctx context.Context, cep string) (*models.WeatherResponse, error
 	)
 
 	weatherResponse := &models.WeatherResponse{
+		City:  cepResponse.Localidade,
 		TempC: tempC,
 		TempF: tempF,
 		TempK: tempK,

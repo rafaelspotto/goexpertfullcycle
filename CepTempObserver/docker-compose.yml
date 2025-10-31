@@ -1,13 +1,36 @@
 services:
-  cep-temperature:
-    build: .
-    container_name: cep-temperature
+  service-a:
+    build:
+      context: .
+      args:
+        SERVICE: service-a
+    container_name: service-a
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+      - PORT=8081
+      - SERVICE_B_URL=http://service-b:8080
+    depends_on:
+      - otel-collector
+      - service-b
+    restart: unless-stopped
+
+  service-b:
+    build:
+      context: .
+      args:
+        SERVICE: server
+    container_name: service-b
     ports:
       - "8080:8080"
     env_file:
       - .env
     environment:
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+      - PORT=8080
     depends_on:
       - otel-collector
     restart: unless-stopped
