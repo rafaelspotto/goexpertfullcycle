@@ -25,7 +25,7 @@ services:
         SERVICE: server
     container_name: service-b
     ports:
-      - "8080:8080"
+      - "8082:8080"
     env_file:
       - .env
     environment:
