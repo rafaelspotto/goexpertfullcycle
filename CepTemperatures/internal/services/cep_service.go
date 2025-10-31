@@ -5,25 +5,37 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 //- Função para consultar ViaCEP API
 
 func GetCep(cep string) (*models.ViaCEPResponse, error) {
-	isValid, err := ValidateCep(cep)
+	isValid, _ := ValidateCep(cep)
 	if !isValid {
 		return nil, fmt.Errorf("cep must be 8 digits")
 	}
 
-	resp, err := http.Get("https://viacep.com.br/ws/" + cep + "/json/")
+	// Criar cliente HTTP com timeout
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+
+	url := "https://viacep.com.br/ws/" + cep + "/json/"
+	resp, err := client.Get(url)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to fetch CEP data: %w", err)
 	}
 	defer resp.Body.Close()
 
+	// Verificar status da resposta
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("viacep API returned status %d", resp.StatusCode)
+	}
+
 	var cepResponse models.ViaCEPResponse
 	if err := json.NewDecoder(resp.Body).Decode(&cepResponse); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to decode CEP response: %w", err)
 	}
 
 	return &cepResponse, nil

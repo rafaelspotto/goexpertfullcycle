@@ -30,7 +30,8 @@ func GetWeatherByCep(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, errorResp)
 		return
 	}
-	if cepInfo.Localidade == "" {
+	// Verificar se a ViaCEP retornou erro
+	if cepInfo.Erro || cepInfo.Localidade == "" {
 		errorResp := models.ErrorResponse{
 			Error: "can not find zipcode",
 		}
@@ -47,19 +48,6 @@ func GetWeatherByCep(c *gin.Context) {
 		return
 	}
 
-	tempC := weather.TempC
-	tempF, tempK, _ := services.ConvertTemperature(tempC)
-
-	weatherResp := models.WeatherResponse{
-		TempC: tempC,
-		TempF: tempF,
-		TempK: tempK,
-	}
-
-	successResp := models.SuccessResponse{
-		Message: "Weather data retrieved successfully",
-		Data:    weatherResp,
-	}
-
-	c.JSON(http.StatusOK, successResp)
+	// Retornar apenas os dados de temperatura conforme especificado
+	c.JSON(http.StatusOK, weather)
 }

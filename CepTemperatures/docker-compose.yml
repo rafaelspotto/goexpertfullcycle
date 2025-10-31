@@ -1,0 +1,10 @@
+services:
+  cep-temperature:
+    build: .
+    container_name: cep-temperature
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    restart: unless-stopped
+
