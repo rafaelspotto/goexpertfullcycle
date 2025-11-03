@@ -2,6 +2,38 @@
 
 Sistema em Go que recebe um CEP, identifica a cidade e retorna o clima atual em graus Celsius, Fahrenheit e Kelvin.
 
+## 🌐 Como Usar o Serviço (Cloud Run)
+
+### 🔗 URL do Serviço
+
+**URL Principal:** `https://cep-temperature-47ocgrvvgq-uc.a.run.app`
+
+### 📡 Exemplos Rápidos
+
+**Health Check:**
+- Navegador: https://cep-temperature-47ocgrvvgq-uc.a.run.app/health
+- Terminal: `curl https://cep-temperature-47ocgrvvgq-uc.a.run.app/health`
+
+**Consultar Temperatura por CEP:**
+- Navegador: https://cep-temperature-47ocgrvvgq-uc.a.run.app/weather/01310100
+- Terminal: `curl https://cep-temperature-47ocgrvvgq-uc.a.run.app/weather/01310100`
+
+**Resposta de Sucesso:**
+```json
+{
+  "temp_C": 16.1,
+  "temp_F": 60.98,
+  "temp_K": 289.25
+}
+```
+
+**Outros CEPs para testar:**
+- São Paulo (Centro): `01001000`
+- Rio de Janeiro: `20040020`
+- Belo Horizonte: `30130100`
+
+> 💡 **Dica:** Substitua o CEP na URL pelo CEP desejado (8 dígitos, sem hífen)
+
 ## 📋 Requisitos
 
 - Docker e Docker Compose instalados
